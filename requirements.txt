@@ -1,0 +1,7 @@
+# Core dependencies for Local Word <-> PDF Converter
+pywin32>=306
+pdf2docx>=0.5.13
+python-docx>=1.0.0
+
+# Optional: To package the application as a standalone Windows .exe
+# pyinstaller>=6.0.0

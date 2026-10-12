@@ -1,0 +1,23 @@
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env/
+.venv/
+env/
+venv/
+
+# PyInstaller builds
+build/
+dist/
+*.spec
+
+# Web uploads & temporary files
+temp_uploads/
+*.tmp
+
+# Test artifacts
+test_run_artifacts/
+test_folder*/

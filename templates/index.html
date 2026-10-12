@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocMorph — Free & Private Word ↔ PDF Web Converter</title>
+    <meta name="description" content="Sleek, fast, and 100% private Word to PDF and PDF to Word online converter. Converts documents locally or in the cloud without data tracking.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Background Ambient Glows -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <div class="app-wrapper">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-group">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>DocMorph</h1>
+                    <span class="logo-sub">Word ↔ PDF Converter</span>
+                </div>
+            </div>
+            <div class="header-badge">
+                <span class="badge-dot"></span>
+                <span>100% Private & Auto-Purged</span>
+            </div>
+        </header>
+
+        <!-- Main Card -->
+        <main class="main-card">
+            <!-- Mode Switcher Tabs -->
+            <div class="mode-tabs">
+                <button type="button" class="tab-btn active" id="tab-w2p" data-mode="word-to-pdf">
+                    <span class="tab-icon">W</span>
+                    <span>Word to PDF</span>
+                    <span class="tab-arrow">→</span>
+                    <span class="tab-icon pdf-icon">P</span>
+                </button>
+                <button type="button" class="tab-btn" id="tab-p2w" data-mode="pdf-to-word">
+                    <span class="tab-icon pdf-icon">P</span>
+                    <span>PDF to Word</span>
+                    <span class="tab-arrow">→</span>
+                    <span class="tab-icon">W</span>
+                </button>
+            </div>
+
+            <!-- Upload Zone -->
+            <div class="upload-zone" id="upload-zone">
+                <input type="file" id="file-input" class="file-input-hidden" accept=".docx,.doc">
+                
+                <div class="upload-content" id="upload-prompt">
+                    <div class="upload-icon-pulse">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </div>
+                    <h2 class="upload-title">Drop your file here, or <span class="browse-link">browse</span></h2>
+                    <p class="upload-hint" id="format-hint">Supports Microsoft Word documents (.docx, .doc)</p>
+                    <div class="badges-row" id="badge-container">
+                        <span class="format-badge">.DOCX</span>
+                        <span class="format-badge">.DOC</span>
+                    </div>
+                </div>
+
+                <!-- Selected File Preview (hidden initially) -->
+                <div class="selected-file-preview hidden" id="file-preview">
+                    <div class="preview-file-icon" id="preview-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                    </div>
+                    <div class="preview-file-meta">
+                        <span class="preview-filename" id="preview-filename">document.docx</span>
+                        <span class="preview-filesize" id="preview-filesize">0 KB</span>
+                    </div>
+                    <button type="button" class="btn-remove-file" id="btn-remove-file" title="Remove file">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error Banner -->
+            <div class="alert-box error hidden" id="error-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <span id="error-message">Error message</span>
+            </div>
+
+            <!-- Action Button -->
+            <div class="action-section" id="action-section">
+                <button type="button" class="btn-primary" id="btn-convert" disabled>
+                    <span class="btn-icon">⚡</span>
+                    <span id="btn-text">Convert to PDF</span>
+                </button>
+            </div>
+
+            <!-- Progress State (hidden initially) -->
+            <div class="progress-section hidden" id="progress-section">
+                <div class="progress-meta">
+                    <span class="progress-status" id="progress-status-text">Uploading document...</span>
+                    <span class="progress-percentage" id="progress-percent-text">25%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progress-bar-fill"></div>
+                </div>
+            </div>
+
+            <!-- Result State (hidden initially) -->
+            <div class="result-section hidden" id="result-section">
+                <div class="result-card">
+                    <div class="result-badge-check">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="result-info">
+                        <h3>Conversion Complete!</h3>
+                        <p id="result-meta-text">Ready for download</p>
+                    </div>
+                    <div class="result-actions">
+                        <a href="#" class="btn-download" id="download-link" download>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            <span>Download File</span>
+                        </a>
+                        <button type="button" class="btn-secondary" id="btn-reset">
+                            Convert Another
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Feature Pillars -->
+        <section class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>100% Private</h3>
+                <p>Converted in temporary isolated sandboxes and automatically deleted after 30 minutes.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📐</div>
+                <h3>Layout Fidelity</h3>
+                <p>Preserves margins, headings, complex tables, fonts, and inline graphics accurately.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">☁️</div>
+                <h3>Deploy Anywhere</h3>
+                <p>Runs locally or in any cloud container (Docker, Render, Railway, or AWS).</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="engine-status" id="engine-status">
+                <span class="status-indicator"></span>
+                <span id="engine-status-text">Detecting conversion engines...</span>
+            </div>
+            <div class="footer-links">
+                <span>Free & Open Source</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Client Script -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.spec
+build/
+dist/
+temp_uploads/
+.git/
+.gitignore
+test_run_artifacts/
+test_folder*/
+*.docx.tmp
+*.pdf.tmp
